@@ -1,0 +1,19 @@
+# Configuración local y secretos
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+id_rsa*
+id_ed25519*
+# Evidencia cruda: revisar antes de compartir
+*.pcap
+*.pcapng
+*.log
+evidence/private/
+# Temporales
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
+*.tmp
