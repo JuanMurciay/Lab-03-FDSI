@@ -1,0 +1,6 @@
+Inventario de demostración - entorno LAB
+Todos los activos son ficticios. No representan servicios reales.
+
+WEB-LAB-01
+API-LAB-01
+DB-LAB-01
