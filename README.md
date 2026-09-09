@@ -1,8 +1,9 @@
 # Lab 3 — Automatización de incidentes de CrowdStrike Falcon
 
-**Estudiante:** Juan Sebstian Murcia Yanquen.
+**Estudiante:** 
+#### Juan Sebstian Murcia Yanquen.
+#### Sara Viviana Arteaga Rodriguez.
 
-**Opción 1 · Entrega inicial de una hora · Solo datos ficticios.**
 
 ## Problema y objetivo
 
@@ -96,15 +97,7 @@ del cliente del acceso a los datos y al registro local. Es una frontera lógica.
 La demostración local accede directamente a la API; Nginx corresponde al despliegue
 posterior en Ubuntu. `nginx.conf` deja preparado el proxy hacia 127.0.0.1:5000.
 
-## Plan de una hora
 
-| Tiempo | Actividad |
-|---|---|
-| 0–10 min | Leer el problema y revisar campos y rutas |
-| 10–30 min | Comprender y ejecutar app.py |
-| 30–40 min | Enviar una alerta y consultar lista, detalle y acciones |
-| 40–50 min | Guardar capturas propias y revisar hipótesis STRIDE |
-| 50–60 min | Completar datos pendientes y revisar el repositorio |
 
 Supone Python y Git disponibles. Preparar máquinas virtuales o desplegar en la nube
 puede necesitar tiempo adicional. Esta hora cubre la entrega inicial, no todo el Lab 3.
