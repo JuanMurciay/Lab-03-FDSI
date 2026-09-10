@@ -1,0 +1,8 @@
+.git
+.venv
+.runtime
+.env
+*.zip
+*.log
+*.pcap
+__pycache__

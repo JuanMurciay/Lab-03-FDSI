@@ -1,0 +1,161 @@
+{
+  "inicio_utc": "2026-09-10T01:32:28.219925+00:00",
+  "fin_utc": "2026-09-10T01:32:34.373792+00:00",
+  "entorno": "Local Windows; pruebas automatizadas por Codex; no pruebas del estudiante ni nube",
+  "objetivo": "127.0.0.1:80, :5000 y API auxiliar :5001; PostgreSQL :55432",
+  "pruebas": [
+    {
+      "prueba": "Aplicación web por HTTP",
+      "resultado": "PASS",
+      "detalle": "GET http://127.0.0.1/ sin autenticación"
+    },
+    {
+      "prueba": "Web → REST → API → PostgreSQL",
+      "resultado": "PASS",
+      "detalle": {
+        "almacenamiento": "PostgreSQL",
+        "estado": "ok",
+        "modo": "simulado"
+      }
+    },
+    {
+      "prueba": "Recepción anónima",
+      "resultado": "PASS",
+      "detalle": {
+        "id": 2,
+        "request_id": "68a16613-c91f-44f0-8a11-08eeff90c3f0"
+      }
+    },
+    {
+      "prueba": "Persistencia real y consulta parametrizada",
+      "resultado": "PASS",
+      "detalle": {
+        "motor": "PostgreSQL",
+        "version": "17.10",
+        "apostrofe_conservado": true
+      }
+    },
+    {
+      "prueba": "Correlación de solicitud",
+      "resultado": "PASS",
+      "detalle": "X-Request-ID coincide con solicitudes en PostgreSQL"
+    },
+    {
+      "prueba": "Acción clasificar",
+      "resultado": "PASS",
+      "detalle": {
+        "accion_id": 3
+      }
+    },
+    {
+      "prueba": "Acción enriquecer",
+      "resultado": "PASS",
+      "detalle": {
+        "accion_id": 4
+      }
+    },
+    {
+      "prueba": "Acción escalar",
+      "resultado": "PASS",
+      "detalle": {
+        "accion_id": 5
+      }
+    },
+    {
+      "prueba": "Acción cerrar",
+      "resultado": "PASS",
+      "detalle": {
+        "accion_id": 6
+      }
+    },
+    {
+      "prueba": "Estado e historial persistidos",
+      "resultado": "PASS",
+      "detalle": {
+        "acciones": 5
+      }
+    },
+    {
+      "prueba": "Validación de entrada",
+      "resultado": "PASS",
+      "detalle": "Campos obligatorios ausentes → 400"
+    },
+    {
+      "prueba": "Límite de cuerpo",
+      "resultado": "PASS",
+      "detalle": "Más de 8192 bytes → 413"
+    },
+    {
+      "prueba": "Archivo oculto inaccesible",
+      "resultado": "PASS",
+      "detalle": "La web solo sirve archivos permitidos"
+    },
+    {
+      "prueba": "404 controlado 1",
+      "resultado": "PASS",
+      "detalle": "Solo localhost, sin fuerza bruta"
+    },
+    {
+      "prueba": "404 controlado 2",
+      "resultado": "PASS",
+      "detalle": "Solo localhost, sin fuerza bruta"
+    },
+    {
+      "prueba": "404 controlado 3",
+      "resultado": "PASS",
+      "detalle": "Solo localhost, sin fuerza bruta"
+    },
+    {
+      "prueba": "404 controlado 4",
+      "resultado": "PASS",
+      "detalle": "Solo localhost, sin fuerza bruta"
+    },
+    {
+      "prueba": "404 controlado 5",
+      "resultado": "PASS",
+      "detalle": "Solo localhost, sin fuerza bruta"
+    },
+    {
+      "prueba": "Detección cinco 404 / cinco minutos",
+      "resultado": "PASS",
+      "detalle": "Ventana temporal evaluada en PostgreSQL; origen local compartido por el proxy"
+    },
+    {
+      "prueba": "Línea base de cabeceras",
+      "resultado": "PASS",
+      "detalle": "API auxiliar local HARDENING=0; control de laboratorio, no tráfico externo"
+    },
+    {
+      "prueba": "Persistencia tras reiniciar API auxiliar",
+      "resultado": "PASS",
+      "detalle": "Proceso API nuevo; PostgreSQL conserva la alerta y sus acciones"
+    },
+    {
+      "prueba": "Retest de cabeceras",
+      "resultado": "PASS",
+      "detalle": {
+        "antes": {
+          "x-request-id": "630c99d1-95f6-40cc-9352-cf19498402c5"
+        },
+        "despues": {
+          "x-content-type-options": "nosniff",
+          "x-frame-options": "DENY",
+          "x-request-id": "79067348-a67e-4454-9e37-c15e2b7ea682"
+        }
+      }
+    }
+  ],
+  "no_ejecutado": [
+    "Nmap",
+    "ZAP",
+    "PCAP",
+    "Pruebas entre equipos",
+    "Nginx/Docker en este host"
+  ],
+  "verificacion_interfaz": {
+    "resultado": "PASS",
+    "medio": "Navegador Codex en http://127.0.0.1/",
+    "observacion": "Completar ejemplo y Registrar alerta creó ID 3; Guardar acción añadió contexto ficticio al historial de la misma alerta.",
+    "alerta_id": 3
+  }
+}
