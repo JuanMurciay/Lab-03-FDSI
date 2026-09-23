@@ -1,0 +1,24 @@
+[Unit]
+Description=Lab 3 Falcon ficticio API
+After=network.target postgresql.service
+Requires=postgresql.service
+
+[Service]
+Type=simple
+User=lab3api
+Group=lab3api
+WorkingDirectory=/opt/lab3
+EnvironmentFile=/etc/lab3-api.env
+Environment=API_BIND=127.0.0.1
+Environment=API_PORT=5000
+Environment=HARDENING=1
+ExecStart=/opt/lab3/.venv/bin/python -u /opt/lab3/app.py
+Restart=on-failure
+RestartSec=3
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
