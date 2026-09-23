@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="es">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Falcon Lab · Alertas de seguridad</title><link rel="stylesheet" href="/styles.css"><script src="/web.js" defer></script></head>
+<body>
+<header><a class="brand" href="/">F<span>Falcon Lab</span></a><span class="badge">SIMULACIÓN ACADÉMICA</span><span class="session">Usuario anónimo · HTTP</span></header>
+<main>
+<div class="heading"><div><p class="eyebrow">LABORATORIO 03 / OPCIÓN 1</p><h1>Alertas de seguridad</h1><p>Recibe, consulta y registra acciones sobre alertas ficticias de CrowdStrike Falcon.</p></div><button id="refresh" class="secondary">Actualizar</button></div>
+<p id="connection" role="status">Comprobando conexión con la API y PostgreSQL…</p>
+<div class="metrics"><div><span>Alertas cargadas</span><strong id="total">—</strong></div><div><span>Altas o críticas</span><strong id="urgent">—</strong></div><div><span>Escaladas</span><strong id="escalated">—</strong></div></div>
+<div class="columns"><section class="panel"><h2>Recibir una alerta</h2><p class="muted">Usa únicamente nombres y eventos ficticios.</p>
+<form id="new-alert"><label for="title">Título</label><input id="title" name="titulo" maxlength="200" required placeholder="Ejecución sospechosa simulada">
+<div class="form-row"><div><label for="host">Equipo ficticio</label><input id="host" name="hostname" maxlength="100" required placeholder="EQUIPO-LAB-01"></div><div><label for="severity">Severidad</label><select id="severity" name="severidad"><option value="baja">Baja</option><option value="media">Media</option><option value="alta" selected>Alta</option><option value="critica">Crítica</option></select></div></div>
+<label for="description">Descripción (opcional)</label><textarea id="description" name="descripcion" maxlength="1000" rows="3" placeholder="Contexto ficticio para analizar la alerta"></textarea>
+<button type="submit">Registrar alerta</button><button type="button" id="example" class="secondary">Completar ejemplo</button><p id="form-message" role="status"></p></form></section>
+<section class="panel"><div class="section-head"><h2>Bandeja de alertas</h2><label class="filter" for="filter">Severidad <select id="filter"><option value="">Todas</option><option value="baja">Baja</option><option value="media">Media</option><option value="alta">Alta</option><option value="critica">Crítica</option></select></label></div><p class="muted">Selecciona una alerta para ver el detalle y sus acciones. Máximo 200.</p><div id="alerts" class="alert-list" aria-live="polite">Cargando…</div></section></div>
+<section class="panel detail"><h2>Detalle y seguimiento</h2><p id="empty-detail" class="muted">Selecciona una alerta de la bandeja.</p><div id="detail" hidden><div id="detail-content"></div>
+<form id="action-form"><div class="form-row"><div><label for="action">Acción</label><select id="action"><option value="enriquecer">Añadir contexto ficticio</option><option value="clasificar">Cambiar severidad</option><option value="escalar">Escalar (simulado)</option><option value="cerrar">Cerrar</option></select></div><div id="new-severity-group" hidden><label for="new-severity">Nueva severidad</label><select id="new-severity"><option value="baja">Baja</option><option value="media">Media</option><option value="alta">Alta</option><option value="critica">Crítica</option></select></div></div><label for="note">Nota</label><input id="note" maxlength="1000" placeholder="Describe brevemente la acción con datos ficticios"><button type="submit">Guardar acción</button><p id="action-message" role="status"></p></form>
+<h3>Historial de esta alerta</h3><ol id="history"></ol></div></section>
+<footer>Prototipo local · PostgreSQL persistente · Sin integración ni envío a CrowdStrike. El escalamiento solo cambia el estado. <a href="/public-inventory.txt">Inventario ficticio para la prueba HTTP</a>.</footer>
+</main></body></html>
