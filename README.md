@@ -232,6 +232,9 @@ versionados, presencia de `index.html`, `curl -I` y `curl -i`, estado HTTP
 de la web, la API y la página estática. El [extracto local anonimizado](evidence/local/accesos-anonimizados.md)
 correlaciona cuatro solicitudes con hora, ruta, status y bytes. La revisión previa comprobó HTTP 200
 en `http://127.0.0.1:8080/` y `http://127.0.0.1/`.
+La interfaz también se comprobó visualmente en el navegador local durante
+esta sesión; para la entrega académica todavía hay que adjuntar una captura
+de pantalla exportada con fecha y URL visibles.
 
 Para repetir la comprobación estática sin publicar credenciales, copie **solo**
 `index.html`, `styles.css`, `web.js` y `public-inventory.txt` a una carpeta vacía, abra allí
