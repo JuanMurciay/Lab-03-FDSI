@@ -109,7 +109,7 @@ confirmar el alcance antes de Red Team.
 | Information Disclosure | Cabeceras exponen tecnología | `curl -I "$TARGET_URL/"`, ZAP pasivo | headers/banners observables | respuesta + reporte HTML |
 | Repudiation | Solicitud sin identidad es atribuible solo a origen/hora | GET único y comparar log | misma hora/ruta/código | comando + access.log |
 | Tampering | HTTP carece de integridad en tránsito | inspección de protocolo, sin MITM | esquema `http://` | configuración + captura propia |
-| Denial of Service | Rutas inexistentes repetidas generan señal | cinco GET 404 manuales, sin carga masiva | regla dispara | cinco timestamps + log |
+| Denial of Service | Rutas API inexistentes repetidas generan señal | cinco GET 404 manuales, sin carga masiva | regla dispara | cinco timestamps + log |
 
 Antes de cada acción completar el responsable, origen, destino, hora UTC y
 ventana autorizada. La tabla no registra un resultado realizado.
@@ -150,9 +150,20 @@ excluido de Git por defecto; revisar/anonimizar antes de cualquier entrega.
 
 Correlacionar al menos tres eventos con hora UTC, IP origen, método, ruta,
 status, bytes y User-Agent. Un SYN de Nmap puede no figurar en access.log.
-Para cinco rutas inexistentes en cinco minutos, evaluar la regla
-`deteccion.sql` en la BD y revisar el access.log Nginx, explicando falsos
-positivos de enlaces rotos/proxy compartido. No automatizar bloqueo.
+Tras autorización, efectuar exactamente cinco GET a una ruta **API**
+inexistente, uno por comando, y evaluar la regla en la BD:
+
+```bash
+for i in 1 2 3 4 5; do date -u +%Y-%m-%dT%H:%M:%SZ; curl -i "$TARGET_URL/api/ruta-qa-inexistente"; done
+sudo -u postgres psql -d falcon_lab -f /opt/lab3/deteccion.sql
+```
+
+`deteccion.sql` lee la tabla `solicitudes` de la API; un 404 puramente
+estático de Nginx solo aparece en access.log y no activa esta consulta.
+Comparar las cinco líneas Nginx con los cinco registros de la API. La API
+puede registrar la IP del proxy en vez del cliente, lo que limita la
+atribución. Explicar falsos positivos de enlaces rotos/proxy compartido.
+No automatizar bloqueo.
 
 | UTC | Acción Red | Línea Blue / PCAP | Interpretación |
 |---|---|---|---|
