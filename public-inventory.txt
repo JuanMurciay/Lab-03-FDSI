@@ -1,0 +1,4 @@
+Inventario de prueba — Falcon Lab (ficticio)
+WEB-LAB-01
+API-LAB-01
+DB-LAB-01

@@ -49,6 +49,8 @@ def main():
     inicio = datetime.now(timezone.utc).isoformat()
     status, headers, html = peticion('/')
     comprobar('Aplicación web por HTTP', status == 200 and 'Falcon Lab' in html, 'GET http://127.0.0.1/ sin autenticación')
+    status, _, inventario = peticion('/public-inventory.txt')
+    comprobar('Inventario público ficticio', status == 200 and all(x in inventario for x in ('WEB-LAB-01', 'API-LAB-01', 'DB-LAB-01')), 'Archivo público de prueba sin IP ni secretos reales')
     status, _, health = peticion('/api/health')
     comprobar('Web → REST → API → PostgreSQL', status == 200 and health['almacenamiento'] == 'PostgreSQL', health)
     datos = {'titulo': "Prueba local: alerta ficticia O'Brien", 'hostname': 'EQUIPO-QA-LAB', 'severidad': 'alta', 'descripcion': 'Registro ficticio de verificación local automatizada.'}
@@ -88,7 +90,7 @@ def main():
     finally:
         p.terminate(); p.wait(timeout=10)
     informe = {'inicio_utc': inicio, 'fin_utc': datetime.now(timezone.utc).isoformat(), 'entorno': 'Local Windows; pruebas automatizadas por Codex; no pruebas del estudiante ni nube', 'objetivo': '127.0.0.1:80, :5000 y API auxiliar :5001; PostgreSQL :55432', 'pruebas': resultados, 'no_ejecutado': ['Nmap', 'ZAP', 'PCAP', 'Pruebas entre equipos', 'Nginx/Docker en este host']}
-    (ROOT / 'evidencia-local.json').write_text(json.dumps(informe, ensure_ascii=False, indent=2, default=str), encoding='utf-8')
+    (ROOT / 'evidencia-local.json').write_bytes(json.dumps(informe, ensure_ascii=False, indent=2, default=str).encode('utf-8'))
     print(f'{len(resultados)} comprobaciones PASS. Evidencia: evidencia-local.json')
 
 

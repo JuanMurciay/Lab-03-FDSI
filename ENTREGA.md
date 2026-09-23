@@ -26,7 +26,7 @@ API y conservar las acciones realizadas. No sustituye un sistema SOC productivo.
 
 ## 2. DFD (perspectivas adversario y defensor)
 
-![DFD Lab 3](dfd-lab3.png)
+![DFD Lab 3](diagrams/dfd-lab3.png)
 
 La aplicación web recibe al usuario anónimo por HTTP en el puerto 80. Su interfaz
 consume rutas REST `/api/…`; el servidor web las envía a la API independiente del
@@ -65,7 +65,7 @@ aplicados. No se presentan observaciones de diseño como explotación demostrada
 | Consultas parametrizadas | Valores pasados como parámetros psycopg | No equivale a una evaluación DAST completa |
 | Salida segura en web | Datos renderizados con textContent; CSP sin scripts externos | Requiere mantener ese patrón en futuras funciones |
 | Cabeceras | nosniff, DENY, no-referrer; Cache-Control no-store | No cifra HTTP |
-| Archivos permitidos | Web solo sirve index, CSS y JS; /.env devuelve 404 | API y datos siguen disponibles anónimamente |
+| Archivos permitidos | Web solo sirve index, CSS, JS e inventario ficticio; /.env devuelve 404 | API y datos siguen disponibles anónimamente |
 | Separación de credenciales | Secretos locales fuera de Git; rol PostgreSQL sin superusuario en Windows | La copia Docker necesita endurecer roles antes de producción |
 | Trazabilidad | request_id, UTC y tablas de acciones y solicitudes | No hay identidad; administrador de BD puede alterar registros |
 | Restricción de red local | Servicios ligados a loopback | No valida un firewall de nube ni una red entre equipos |
@@ -82,7 +82,7 @@ proxy pueden generar falsos positivos. No se implementa bloqueo automático.
 ## 5. Pruebas y comparación antes/después
 
 La evidencia reproducible está en [evidencia-local.json](evidencia-local.json), generada
-por [verificar.py](verificar.py). Se ejecutaron 22 comprobaciones locales satisfactorias:
+por [verificar.py](verificar.py). Se ejecutaron 23 comprobaciones locales satisfactorias:
 web HTTP, conexión PostgreSQL, recepción y consulta anónimas, cuatro tipos de acción,
 persistencia, correlación, validación, 404 controlados y cabeceras.
 
@@ -96,6 +96,7 @@ La web principal permaneció con controles activados durante la prueba.
 | X-Frame-Options / nosniff en API auxiliar | Ausentes en línea base | DENY / nosniff verificados |
 | Proceso API auxiliar | Detenido después de la consulta inicial | Nueva instancia recupera alerta y acciones |
 | Datos de la primera versión del proyecto | Almacenamiento en memoria | PostgreSQL persistente en la versión actual |
+| Inventario público ficticio | `6abaf20` incluía funciones de cada componente | La versión actual conserva solo tres identificadores ficticios; comparación en Git |
 | HTTP e identidad | Sin cifrado ni autenticación | Siguen abiertos por alcance pedagógico |
 
 No se ejecutaron Nmap, ZAP, PCAP, un ataque MITM, pruebas destructivas ni pruebas contra

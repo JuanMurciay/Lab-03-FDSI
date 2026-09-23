@@ -1,5 +1,7 @@
 """Web local: archivos estáticos y proxy REST hacia la API separada."""
 import os
+import json
+from datetime import datetime, timezone
 from pathlib import Path
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError, URLError
@@ -17,7 +19,7 @@ def inicio():
 
 @web.get('/<name>')
 def archivo(name):
-    if name not in {'styles.css', 'web.js'}:
+    if name not in {'styles.css', 'web.js', 'public-inventory.txt'}:
         return {'error': 'Recurso no encontrado'}, 404
     return send_from_directory(ROOT, name)
 
@@ -43,6 +45,15 @@ def controles(response):
     response.headers['Referrer-Policy'] = 'no-referrer'
     response.headers['Content-Security-Policy'] = "default-src 'self'; script-src 'self'; style-src 'self'; frame-ancestors 'none'; base-uri 'none'"
     response.headers['Cache-Control'] = 'no-store'
+    print(json.dumps({
+        'utc': datetime.now(timezone.utc).isoformat(),
+        'origen': request.remote_addr,
+        'metodo': request.method,
+        'ruta': request.path[:500],
+        'codigo': response.status_code,
+        'bytes': response.content_length,
+        'user_agent': request.headers.get('User-Agent', '')[:200],
+    }, ensure_ascii=False), flush=True)
     return response
 
 if __name__ == '__main__':

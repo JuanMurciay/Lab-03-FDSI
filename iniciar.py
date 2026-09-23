@@ -97,19 +97,25 @@ def main():
             run([pg / 'initdb.exe', '-D', cluster, '-U', 'postgres', '--auth=scram-sha-256', '--encoding=UTF8', '--locale=C', '--pwfile', pwfile])
         finally:
             pwfile.unlink(missing_ok=True)
-    estado = subprocess.run([str(pg / 'pg_ctl.exe'), '-D', str(cluster), 'status'], capture_output=True, creationflags=FLAGS)
-    if estado.returncode != 0:
+    pg_iniciado = False
+    with socket.socket() as prueba:
+        prueba.settimeout(1)
+        puerto_pg_ocupado = prueba.connect_ex(('127.0.0.1', 55432)) == 0
+    if not puerto_pg_ocupado:
         # Ejecutar el servidor directamente también funciona en terminales restringidas.
         with (RUNTIME / 'postgres.log').open('a', encoding='utf-8') as log:
             subprocess.Popen([str(pg / 'postgres.exe'), '-D', str(cluster), '-h', '127.0.0.1', '-p', '55432'], stdout=log, stderr=log, creationflags=FLAGS)
-        for intento in range(60):
-            try:
-                with psycopg.connect(host='127.0.0.1', port=55432, dbname='postgres', user='postgres', password=admin['password'], connect_timeout=1):
-                    break
-            except psycopg.OperationalError:
-                if intento == 59:
-                    raise
-                time.sleep(.5)
+        pg_iniciado = True
+    # Tras un cierre inesperado PostgreSQL puede tardar más de 30 s en
+    # recuperar datos. Un puerto abierto tampoco significa que ya esté listo.
+    for intento in range(360):
+        try:
+            with psycopg.connect(host='127.0.0.1', port=55432, dbname='postgres', user='postgres', password=admin['password'], connect_timeout=1):
+                break
+        except psycopg.OperationalError:
+            if intento == 359:
+                raise
+            time.sleep(.5)
     dbfile = RUNTIME / 'database.json'
     if not dbfile.exists():
         dbfile.write_text(json.dumps({'host': '127.0.0.1', 'port': 55432, 'dbname': 'falcon_lab', 'user': 'falcon_app', 'password': secrets.token_urlsafe(24)}))
@@ -141,7 +147,10 @@ def main():
                 p.wait(timeout=10)
         for log in logs:
             log.close()
-        run([pg / 'pg_ctl.exe', '-D', cluster, '-m', 'fast', '-w', 'stop'])
+        if pg_iniciado:
+            estado = subprocess.run([str(pg / 'pg_ctl.exe'), '-D', str(cluster), 'status'], capture_output=True, creationflags=FLAGS)
+            if estado.returncode == 0:
+                run([pg / 'pg_ctl.exe', '-D', cluster, '-m', 'fast', '-w', 'stop'])
 
 
 if __name__ == '__main__':

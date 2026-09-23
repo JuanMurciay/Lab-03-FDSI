@@ -1,6 +1,6 @@
 {
-  "inicio_utc": "2026-09-10T01:32:28.219925+00:00",
-  "fin_utc": "2026-09-10T01:32:34.373792+00:00",
+  "inicio_utc": "2026-09-23T15:19:33.528998+00:00",
+  "fin_utc": "2026-09-23T15:19:39.975349+00:00",
   "entorno": "Local Windows; pruebas automatizadas por Codex; no pruebas del estudiante ni nube",
   "objetivo": "127.0.0.1:80, :5000 y API auxiliar :5001; PostgreSQL :55432",
   "pruebas": [
@@ -8,6 +8,11 @@
       "prueba": "Aplicación web por HTTP",
       "resultado": "PASS",
       "detalle": "GET http://127.0.0.1/ sin autenticación"
+    },
+    {
+      "prueba": "Inventario público ficticio",
+      "resultado": "PASS",
+      "detalle": "Archivo público de prueba sin IP ni secretos reales"
     },
     {
       "prueba": "Web → REST → API → PostgreSQL",
@@ -22,8 +27,8 @@
       "prueba": "Recepción anónima",
       "resultado": "PASS",
       "detalle": {
-        "id": 2,
-        "request_id": "68a16613-c91f-44f0-8a11-08eeff90c3f0"
+        "id": 5,
+        "request_id": "256a1b2f-642f-4fab-aa1d-eac23e3fdbf9"
       }
     },
     {
@@ -44,28 +49,28 @@
       "prueba": "Acción clasificar",
       "resultado": "PASS",
       "detalle": {
-        "accion_id": 3
+        "accion_id": 15
       }
     },
     {
       "prueba": "Acción enriquecer",
       "resultado": "PASS",
       "detalle": {
-        "accion_id": 4
+        "accion_id": 16
       }
     },
     {
       "prueba": "Acción escalar",
       "resultado": "PASS",
       "detalle": {
-        "accion_id": 5
+        "accion_id": 17
       }
     },
     {
       "prueba": "Acción cerrar",
       "resultado": "PASS",
       "detalle": {
-        "accion_id": 6
+        "accion_id": 18
       }
     },
     {
@@ -135,12 +140,12 @@
       "resultado": "PASS",
       "detalle": {
         "antes": {
-          "x-request-id": "630c99d1-95f6-40cc-9352-cf19498402c5"
+          "x-request-id": "2f2d3a74-b987-4390-89da-5eb615053162"
         },
         "despues": {
           "x-content-type-options": "nosniff",
           "x-frame-options": "DENY",
-          "x-request-id": "79067348-a67e-4454-9e37-c15e2b7ea682"
+          "x-request-id": "4d3c77ef-d2eb-480c-bd57-95c6f7ebd4e1"
         }
       }
     }
@@ -151,11 +156,5 @@
     "PCAP",
     "Pruebas entre equipos",
     "Nginx/Docker en este host"
-  ],
-  "verificacion_interfaz": {
-    "resultado": "PASS",
-    "medio": "Navegador Codex en http://127.0.0.1/",
-    "observacion": "Completar ejemplo y Registrar alerta creó ID 3; Guardar acción añadió contexto ficticio al historial de la misma alerta.",
-    "alerta_id": 3
-  }
+  ]
 }

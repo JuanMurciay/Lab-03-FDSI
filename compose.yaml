@@ -26,10 +26,11 @@ services:
     ports:
       - "127.0.0.1:80:80"
     volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
       - ./index.html:/usr/share/nginx/html/index.html:ro
       - ./styles.css:/usr/share/nginx/html/styles.css:ro
       - ./web.js:/usr/share/nginx/html/web.js:ro
+      - ./public-inventory.txt:/usr/share/nginx/html/public-inventory.txt:ro
     depends_on:
       - api
 volumes:
