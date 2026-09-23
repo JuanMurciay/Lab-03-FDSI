@@ -8,6 +8,7 @@ No hay IP, CIDR, ventana ni servidor Ubuntu asignados al equipo.
 |---|---|---|
 | Prototipo HTTP anónimo con datos ficticios | **Comprobado local** | `README.md`, `index.html`, `app.py`, `evidencia-local.json` |
 | GitHub público, clonación, archivos y commit | **Comprobado** | `evidence/local/verificacion-2026-09-23.md` |
+| Captura del navegador local con URL/fecha | **Comprobada visualmente; archivo pendiente** | Adjuntar captura exportada de la aplicación HTTP para el informe |
 | URL HTTP de instancia Ubuntu en CIDR autorizado | **Pendiente** | Docente debe asignar IP/CIDR/ventana; luego ejecutar `docs/despliegue-ubuntu.md` |
 | Host Ubuntu, Nginx, UFW, permisos y logs | **Configurado en archivos; sin ejecución** | `nginx/muvautomation-ubuntu.conf`, `nginx/lab3-api.service`; Compose validó sintaxis, no arrancó daemon |
 | DFD con dos límites y STRIDE | **Documentado** | `diagrams/dfd-lab3.png`, README y `risk-register.md` |
