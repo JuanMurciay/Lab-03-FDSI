@@ -1,0 +1,63 @@
+name: DAST local y validacion - Lab 5
+on:
+  push:
+    branches: [security/lab-fsi]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  zap:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+      - name: Preparar entorno aislado
+        run: |
+          mkdir -p reports
+          chmod 777 reports
+          git worktree add /tmp/lab5-base 6a1f8839c234bbe5f4258e9868808ac3996cda35
+      - name: Antes y despues con PostgreSQL real y ZAP pasivo
+        shell: bash
+        run: |
+          set -euo pipefail
+          export POSTGRES_PASSWORD="$(openssl rand -hex 24)"
+          export LAB_API_TOKEN="$(openssl rand -hex 32)"
+          echo "::add-mask::$POSTGRES_PASSWORD"
+          echo "::add-mask::$LAB_API_TOKEN"
+          for etapa in antes despues; do
+            carpeta="$PWD"
+            if [ "$etapa" = antes ]; then carpeta=/tmp/lab5-base; fi
+            docker compose -p lab5 -f "$carpeta/compose.yaml" up -d --build
+            listo=0
+            for intento in $(seq 1 60); do
+              if curl -fsS http://127.0.0.1:5000/api/health > /dev/null && curl -fsS http://127.0.0.1/ > /dev/null; then listo=1; break; fi
+              sleep 2
+            done
+            test "$listo" = 1
+            python scripts/lab5/validar_http.py "$etapa" "reports/http-$etapa.json"
+            for destino in web api; do
+              target=http://127.0.0.1/
+              if [ "$destino" = api ]; then target=http://127.0.0.1:5000/api/health; fi
+              # -I conserva alertas WARN en los reportes sin bloquear esta practica.
+              # Errores operativos y reglas FAIL siguen haciendo fallar el job.
+              docker run --rm --network host -v "$PWD/reports:/zap/wrk:rw" ghcr.io/zaproxy/zaproxy:stable \
+                zap-baseline.py -t "$target" -m 1 -T 5 -I -r "zap-$destino-$etapa.html" -J "zap-$destino-$etapa.json"
+            done
+            docker compose -p lab5 -f "$carpeta/compose.yaml" down -v
+          done
+      - name: Adjuntar evidencia
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: informe-zap-y-validacion
+          path: reports/
+          if-no-files-found: error
+      - name: Limpiar servicios de laboratorio
+        if: always()
+        env:
+          POSTGRES_PASSWORD: solo-interpolacion-limpieza
+          LAB_API_TOKEN: solo-interpolacion-limpieza
+        run: docker compose -p lab5 down -v

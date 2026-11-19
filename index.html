@@ -2,12 +2,13 @@
 <html lang="es">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Falcon Lab · Alertas de seguridad</title><link rel="stylesheet" href="/styles.css"><script src="/web.js" defer></script></head>
 <body>
-<header><a class="brand" href="/">F<span>Falcon Lab</span></a><span class="badge">SIMULACIÓN ACADÉMICA</span><span class="session">Usuario anónimo · HTTP</span></header>
+<header><a class="brand" href="/">F<span>Falcon Lab</span></a><span class="badge">SIMULACIÓN ACADÉMICA</span><span class="session">Consulta pública · Escritura con token</span></header>
 <main>
 <div class="heading"><div><p class="eyebrow">LABORATORIO 03 / OPCIÓN 1</p><h1>Alertas de seguridad</h1><p>Recibe, consulta y registra acciones sobre alertas ficticias de CrowdStrike Falcon.</p></div><button id="refresh" class="secondary">Actualizar</button></div>
 <p id="connection" role="status">Comprobando conexión con la API y PostgreSQL…</p>
 <div class="metrics"><div><span>Alertas cargadas</span><strong id="total">—</strong></div><div><span>Altas o críticas</span><strong id="urgent">—</strong></div><div><span>Escaladas</span><strong id="escalated">—</strong></div></div>
 <div class="columns"><section class="panel"><h2>Recibir una alerta</h2><p class="muted">Usa únicamente nombres y eventos ficticios.</p>
+<label for="lab-token">Token local para registrar o modificar alertas</label><input id="lab-token" type="password" autocomplete="off" maxlength="512" placeholder="Token configurado por el equipo"><p class="muted">Se usa durante esta sesión y no se guarda en el navegador.</p>
 <form id="new-alert"><label for="title">Título</label><input id="title" name="titulo" maxlength="200" required placeholder="Ejecución sospechosa simulada">
 <div class="form-row"><div><label for="host">Equipo ficticio</label><input id="host" name="hostname" maxlength="100" required placeholder="EQUIPO-LAB-01"></div><div><label for="severity">Severidad</label><select id="severity" name="severidad"><option value="baja">Baja</option><option value="media">Media</option><option value="alta" selected>Alta</option><option value="critica">Crítica</option></select></div></div>
 <label for="description">Descripción (opcional)</label><textarea id="description" name="descripcion" maxlength="1000" rows="3" placeholder="Contexto ficticio para analizar la alerta"></textarea>

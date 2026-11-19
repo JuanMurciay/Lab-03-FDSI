@@ -15,6 +15,7 @@ services:
   api:
     build: .
     environment:
+      LAB_API_TOKEN: ${LAB_API_TOKEN:?Define LAB_API_TOKEN en .env}
       DATABASE_URL: postgresql://falcon_app:${POSTGRES_PASSWORD}@db:5432/falcon_lab
     depends_on:
       db:

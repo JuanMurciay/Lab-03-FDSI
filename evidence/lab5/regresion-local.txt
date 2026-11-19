@@ -1,0 +1,17 @@
+{"utc": "2026-11-19T00:34:56.451243+00:00", "origen": "127.0.0.1", "metodo": "GET", "ruta": "/", "codigo": 200, "bytes": 4299, "user_agent": "Werkzeug/3.1.9"}
+{"utc": "2026-11-19T00:34:56.475989+00:00", "origen": "127.0.0.1", "metodo": "POST", "ruta": "/api/alertas", "codigo": 201, "bytes": 9, "user_agent": "Werkzeug/3.1.9"}
+test_acciones_sin_token_se_rechazan (test_seguridad_lab5.SeguridadEscritura.test_acciones_sin_token_se_rechazan) ... ok
+test_csp_frontend_limita_destino_formularios (test_seguridad_lab5.SeguridadEscritura.test_csp_frontend_limita_destino_formularios) ... ok
+test_error_tambien_tiene_csp (test_seguridad_lab5.SeguridadEscritura.test_error_tambien_tiene_csp) ... ok
+test_hardening_desactivado_no_quita_autenticacion (test_seguridad_lab5.SeguridadEscritura.test_hardening_desactivado_no_quita_autenticacion) ... ok
+test_lectura_y_salud_siguen_publicas (test_seguridad_lab5.SeguridadEscritura.test_lectura_y_salud_siguen_publicas) ... ok
+test_proxy_reenvia_token_sin_guardarlo (test_seguridad_lab5.SeguridadEscritura.test_proxy_reenvia_token_sin_guardarlo) ... ok
+test_sin_configuracion_falla_cerrado (test_seguridad_lab5.SeguridadEscritura.test_sin_configuracion_falla_cerrado) ... ok
+test_sin_token_no_inserta_alerta (test_seguridad_lab5.SeguridadEscritura.test_sin_token_no_inserta_alerta) ... ok
+test_token_incorrecto_y_unicode_se_rechazan (test_seguridad_lab5.SeguridadEscritura.test_token_incorrecto_y_unicode_se_rechazan) ... ok
+test_token_valido_permite_registrar (test_seguridad_lab5.SeguridadEscritura.test_token_valido_permite_registrar) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.520s
+
+OK

@@ -26,7 +26,8 @@ def archivo(name):
 @web.route('/api/<path:ruta>', methods=['GET', 'POST'])
 def api(ruta):
     req = Request(BACKEND + request.full_path.rstrip('?'), data=request.get_data() if request.method == 'POST' else None,
-                  method=request.method, headers={'Content-Type': request.content_type or 'application/json'})
+                  method=request.method, headers={'Content-Type': request.content_type or 'application/json',
+                                                 'X-Lab-Token': request.headers.get('X-Lab-Token', '')})
     try:
         upstream = urlopen(req, timeout=10)
     except HTTPError as error:
@@ -43,7 +44,7 @@ def controles(response):
     response.headers['X-Content-Type-Options'] = 'nosniff'
     response.headers['X-Frame-Options'] = 'DENY'
     response.headers['Referrer-Policy'] = 'no-referrer'
-    response.headers['Content-Security-Policy'] = "default-src 'self'; script-src 'self'; style-src 'self'; frame-ancestors 'none'; base-uri 'none'"
+    response.headers['Content-Security-Policy'] = "default-src 'self'; script-src 'self'; style-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'"
     response.headers['Cache-Control'] = 'no-store'
     print(json.dumps({
         'utc': datetime.now(timezone.utc).isoformat(),

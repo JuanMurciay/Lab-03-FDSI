@@ -396,3 +396,9 @@ Red/Blue autorizada, PCAP filtrado, reporte ZAP pasivo, retest remoto,
 reflexión personal y la etiqueta final `lab-3`. La
 [matriz de cumplimiento](docs/cumplimiento-lab3.md) permite cerrar cada punto
 con evidencia real durante la sesión con el docente.
+
+## Laboratorio 5 - AppSec
+
+[Informe de seguridad](docs/SECURITY.md) · [Hallazgos](docs/REPORTE_HALLAZGOS.md)
+
+Para escribir alertas configura LAB_API_TOKEN en el entorno de la API (en .env con Docker Compose). Introduce ese mismo token en el campo de la interfaz; no se guarda en el navegador. Para inicio local con PowerShell: `$env:LAB_API_TOKEN = Read-Host "Token local"` antes de ejecutar INICIAR.cmd. Usa un valor de prueba largo y propio, y no lo publiques. La lectura sigue siendo pública porque los registros son ficticios.

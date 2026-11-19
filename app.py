@@ -2,6 +2,7 @@
 import json
 import os
 import uuid
+import secrets
 from pathlib import Path
 import psycopg
 from psycopg.rows import dict_row
@@ -46,6 +47,15 @@ def crear_api(hardening=True):
     @api.before_request
     def identificar():
         g.request_id = str(uuid.uuid4())
+        # La consulta sigue siendo pública para los datos ficticios del laboratorio.
+        # Toda escritura requiere un token local, incluso si se desactiva hardening.
+        if request.method in {'POST', 'PUT', 'PATCH', 'DELETE'}:
+            esperado = os.getenv('LAB_API_TOKEN', '')
+            if not esperado:
+                return jsonify(error='Escritura deshabilitada: falta configurar LAB_API_TOKEN'), 503
+            recibido = request.headers.get('X-Lab-Token', '')
+            if not secrets.compare_digest(recibido.encode('utf-8'), esperado.encode('utf-8')):
+                return jsonify(error='Token de laboratorio requerido o incorrecto'), 401
 
     @api.after_request
     def registrar(respuesta):
@@ -55,6 +65,7 @@ def crear_api(hardening=True):
             respuesta.headers['X-Content-Type-Options'] = 'nosniff'
             respuesta.headers['X-Frame-Options'] = 'DENY'
             respuesta.headers['Referrer-Policy'] = 'no-referrer'
+            respuesta.headers['Content-Security-Policy'] = "default-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'"
         try:
             with conectar() as db:
                 db.execute('INSERT INTO solicitudes (request_id,origen,metodo,ruta,codigo) VALUES (%s,%s,%s,%s,%s)',
