@@ -25,7 +25,7 @@ jobs:
           git worktree add /tmp/lab5-base 6a1f8839c234bbe5f4258e9868808ac3996cda35
           semgrep scan --config p/owasp-top-ten --config p/secrets --metrics off --json --output "$PWD/reports/semgrep-antes.json" /tmp/lab5-base
           semgrep scan --config p/owasp-top-ten --config p/secrets --metrics off --json --output reports/semgrep-despues.json .
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: always()
         with:
           name: resultado-semgrep
