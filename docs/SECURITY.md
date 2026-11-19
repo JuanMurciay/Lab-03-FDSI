@@ -63,7 +63,7 @@ Semgrep se ejecuta sin --error para poder revisar las alertas durante la prácti
 | F-05 | Semgrep, request-host-used | Nginx reenvía Host recibido | Bajo en el alcance probado; requiere revisión al desplegar | El archivo marcado no es el utilizado por Compose y no se confirmó explotación |
 | R-06 | SCA y revisión de Flask | Flask 3.1.3 ya corrige GHSA-68rp-wp8r-4726 | No aplica ese aviso a la versión usada | No actualizar a ciegas ni inventar una dependencia vulnerable |
 
-El detalle está en [REPORTE_HALLAZGOS.md](REPORTE_HALLAZGOS.md). Semgrep tuvo inicialmente 19 alertas en la primera integración porque también revisó los YAML nuevos. Después de fijar las acciones y añadir cooldown, la versión final tuvo 2. No se borraron reglas ni se ocultaron los reportes para reducir esa cifra.
+El detalle está en [REPORTE_HALLAZGOS.md](REPORTE_HALLAZGOS.md). Semgrep tuvo inicialmente 19 alertas en la primera integración porque también revisó los YAML nuevos. Después de fijar las acciones y añadir cooldown, la versión final tuvo 2. No se borraron reglas del código. Después de publicar las evidencias, Semgrep también marcó 51 enlaces HTTP de los HTML generados por ZAP; se excluyó únicamente evidence/lab5 mediante .semgrepignore para no analizar reportes como si fueran código de la aplicación. Los reportes siguen publicados y Gitleaks continúa revisando el historial completo.
 
 ## 6. Validación manual y remediación
 
