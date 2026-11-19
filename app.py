@@ -65,7 +65,7 @@ def crear_api(hardening=True):
             respuesta.headers['X-Content-Type-Options'] = 'nosniff'
             respuesta.headers['X-Frame-Options'] = 'DENY'
             respuesta.headers['Referrer-Policy'] = 'no-referrer'
-            respuesta.headers['Content-Security-Policy'] = "default-src 'none'; frame-ancestors 'none'; base-uri 'none'"
+            respuesta.headers['Content-Security-Policy'] = "default-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'"
         try:
             with conectar() as db:
                 db.execute('INSERT INTO solicitudes (request_id,origen,metodo,ruta,codigo) VALUES (%s,%s,%s,%s,%s)',

@@ -26,7 +26,7 @@ class SeguridadEscritura(unittest.TestCase):
         self.assertFalse(any('INSERT INTO alertas' in q for q in consultas))
 
     def test_token_incorrecto_y_unicode_se_rechazan(self):
-        for token in ['incorrecto', 'prueba-ñ']:
+        for token in ['incorrecto', 'prueba-Ã±']:
             self.assertEqual(self.client.post('/api/alertas', json=self.payload,
                              headers={'X-Lab-Token': token}).status_code, 401)
 
@@ -50,6 +50,27 @@ class SeguridadEscritura(unittest.TestCase):
         self.db.execute.return_value.fetchall.return_value = []
         self.assertEqual(self.client.get('/api/alertas').status_code, 200)
         self.assertEqual(self.client.get('/api/health').status_code, 200)
+
+    def test_csp_frontend_limita_destino_formularios(self):
+        import web
+        response = web.web.test_client().get('/')
+        self.assertIn("form-action 'self'", response.headers['Content-Security-Policy'])
+        response.close()
+        from pathlib import Path
+        self.assertIn("form-action 'self'", Path('nginx/nginx.conf').read_text())
+
+    def test_proxy_reenvia_token_sin_guardarlo(self):
+        import web
+        with patch('web.urlopen') as upstream:
+            response = upstream.return_value
+            response.read.return_value = b'{"id": 1}'
+            response.code = 201
+            response.headers = {'Content-Type': 'application/json'}
+            result = web.web.test_client().post('/api/alertas', json=self.payload,
+                headers={'X-Lab-Token': 'token-ficticio-solo-pruebas'})
+            self.assertEqual(result.status_code, 201)
+            self.assertEqual(upstream.call_args.args[0].get_header('X-lab-token'),
+                             'token-ficticio-solo-pruebas')
 
     def test_error_tambien_tiene_csp(self):
         response = self.client.get('/api/no-existe')
