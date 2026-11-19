@@ -1,0 +1,42 @@
+{
+  "etapa": "despues",
+  "destino": "http://127.0.0.1:5000",
+  "datos": "solo ficticios",
+  "salud": {
+    "codigo": 200,
+    "cuerpo": {
+      "almacenamiento": "PostgreSQL",
+      "estado": "ok",
+      "modo": "simulado"
+    },
+    "csp": "default-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'"
+  },
+  "escritura_sin_token": {
+    "codigo": 401,
+    "cuerpo": {
+      "error": "Token de laboratorio requerido o incorrecto"
+    },
+    "csp": "default-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'"
+  },
+  "escritura_token_incorrecto": {
+    "codigo": 401,
+    "cuerpo": {
+      "error": "Token de laboratorio requerido o incorrecto"
+    },
+    "csp": "default-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'"
+  },
+  "escritura_autorizada": {
+    "codigo": 201,
+    "cuerpo": {
+      "creado_en": "Thu, 19 Nov 2026 00:32:36 GMT",
+      "descripcion": "",
+      "estado": "nueva",
+      "fuente": "CrowdStrike Falcon - SIMULADO",
+      "hostname": "EQUIPO-FICTICIO",
+      "id": 1,
+      "severidad": "baja",
+      "titulo": "Validacion Lab 5"
+    },
+    "csp": "default-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'"
+  }
+}

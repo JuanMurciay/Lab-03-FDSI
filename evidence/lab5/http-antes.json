@@ -1,0 +1,28 @@
+{
+  "etapa": "antes",
+  "destino": "http://127.0.0.1:5000",
+  "datos": "solo ficticios",
+  "salud": {
+    "codigo": 200,
+    "cuerpo": {
+      "almacenamiento": "PostgreSQL",
+      "estado": "ok",
+      "modo": "simulado"
+    },
+    "csp": null
+  },
+  "escritura_sin_token": {
+    "codigo": 201,
+    "cuerpo": {
+      "creado_en": "Thu, 19 Nov 2026 00:30:55 GMT",
+      "descripcion": "",
+      "estado": "nueva",
+      "fuente": "CrowdStrike Falcon - SIMULADO",
+      "hostname": "EQUIPO-FICTICIO",
+      "id": 1,
+      "severidad": "baja",
+      "titulo": "Validacion Lab 5"
+    },
+    "csp": null
+  }
+}

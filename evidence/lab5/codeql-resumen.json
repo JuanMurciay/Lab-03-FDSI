@@ -1,0 +1,11 @@
+{
+  "tool": "CodeQL",
+  "rule": "py/clear-text-storage-sensitive-data",
+  "tool_severity": "high",
+  "state": "open",
+  "path": "iniciar.py",
+  "line": 95,
+  "url": "https://github.com/JuanMurciay/Lab-03-FDSI/security/code-scanning/1",
+  "sha": "19de2cd598f566b54620130512de2d90f900f25a",
+  "note": "Sin valores de contraseñas. Credencial generada para PostgreSQL local."
+}

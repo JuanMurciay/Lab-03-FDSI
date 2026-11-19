@@ -1,0 +1,15 @@
+{
+  "native_alerts_enabled": true,
+  "open_alerts_at_review": 0,
+  "dependency_review_url": "https://github.com/JuanMurciay/Lab-03-FDSI/actions/runs/44429539772",
+  "versions": {
+    "Flask": "3.1.3",
+    "waitress": "3.0.2",
+    "psycopg": "3.3.5"
+  },
+  "reviewed_advisory": "GHSA-68rp-wp8r-4726",
+  "affected_flask": "<3.1.3",
+  "patched_flask": "3.1.3",
+  "decision": "No aplica este aviso; no se actualizó una dependencia sin necesidad comprobada.",
+  "limitation": "Dependency Review analiza cambios; no certifica todas las dependencias transitivas."
+}

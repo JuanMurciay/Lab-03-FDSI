@@ -1,0 +1,37 @@
+{
+  "dependabot_alerts": {
+    "status": 204
+  },
+  "secret_scanning": {
+    "secret_scanning": {
+      "status": "enabled"
+    },
+    "secret_scanning_push_protection": {
+      "status": "enabled"
+    },
+    "dependabot_security_updates": {
+      "status": "disabled"
+    },
+    "secret_scanning_non_provider_patterns": {
+      "status": "disabled"
+    },
+    "secret_scanning_validity_checks": {
+      "status": "disabled"
+    }
+  },
+  "codeql_default": {
+    "state": "not-configured",
+    "languages": [
+      "javascript",
+      "javascript-typescript",
+      "python",
+      "typescript"
+    ],
+    "query_suite": "default",
+    "threat_model": "remote",
+    "updated_at": null,
+    "schedule": null,
+    "runner_type": "standard",
+    "runner_label": null
+  }
+}

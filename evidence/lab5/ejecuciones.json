@@ -1,0 +1,10 @@
+{
+  "sha": "19de2cd598f566b54620130512de2d90f900f25a",
+  "baseline": "6a1f8839c234bbe5f4258e9868808ac3996cda35",
+  "static_url": "https://github.com/JuanMurciay/Lab-03-FDSI/actions/runs/44429539772",
+  "dast_url": "https://github.com/JuanMurciay/Lab-03-FDSI/actions/runs/44429528875",
+  "codeql_url": "https://github.com/JuanMurciay/Lab-03-FDSI/actions/runs/44429539812",
+  "status": "success",
+  "date_colombia": "2026-11-18",
+  "scope": "localhost en runners temporales de GitHub Actions"
+}
