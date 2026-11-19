@@ -1,0 +1,61 @@
+name: Seguridad estatica - Lab 5
+on:
+  push:
+    branches: [main, security/lab-fsi]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  sast:
+    name: Semgrep
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install semgrep
+      - name: Analizar linea base y propuesta
+        run: |
+          mkdir -p reports
+          git worktree add /tmp/lab5-base 6a1f8839c234bbe5f4258e9868808ac3996cda35
+          semgrep scan --config p/owasp-top-ten --config p/secrets --metrics off --json --output "$PWD/reports/semgrep-antes.json" /tmp/lab5-base
+          semgrep scan --config p/owasp-top-ten --config p/secrets --metrics off --json --output reports/semgrep-despues.json .
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: resultado-semgrep
+          path: reports/semgrep-*.json
+          if-no-files-found: error
+  secretos:
+    name: Gitleaks
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  regresion:
+    name: Regresion de acceso
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements.txt
+      - run: python -m unittest discover -s tests -v
+  dependencias:
+    name: SCA - Dependency Review
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/dependency-review-action@v4

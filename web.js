@@ -1,7 +1,7 @@
 const $ = id => document.getElementById(id);
 let selected = null;
 async function api(path, options = {}) {
-  const response = await fetch('/api' + path, {...options, headers: {'Content-Type': 'application/json'}});
+  const response = await fetch('/api' + path, {...options, headers: {'Content-Type': 'application/json', 'X-Lab-Token': $('lab-token').value}});
   const data = await response.json();
   if (!response.ok) throw new Error(data.error || 'No se pudo completar la operación');
   return data;
